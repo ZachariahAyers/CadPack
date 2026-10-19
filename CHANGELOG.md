@@ -2,12 +2,11 @@
 
 ## v2.0.0 - 2026-10-19
 
-Rebuilt for current AutoCAD. Same tools, same command names.
+Built for current AutoCAD.
 
 ### Changed
 
-- Targets AutoCAD 2027 and .NET 10 through Autodesk's `AutoCAD.NET` package; v1 targeted AutoCAD 2018
-  on .NET Framework 4.6.
+- Targets AutoCAD 2027 and .NET 10 through Autodesk's `AutoCAD.NET` package.
 - Ships as an autoloader bundle that loads the plug-in and the LISP routines and sets their support path.
 - The ribbon builds itself at startup. Its buttons and material layers are data tables.
 - The single 2,750-line command file is split by area, with one error guard for every command.
@@ -33,7 +32,3 @@ Rebuilt for current AutoCAD. Same tools, same command names.
 - 23 ribbon buttons that called commands defined outside this project.
 - The unused Visual Studio template project, a zip duplicating the LISP files, unused data copies,
   placeholder icons and the Windows thumbnail cache.
-
-## v1 - 2018-03-29
-
-AutoCAD 2018 ribbon plug-in for .NET Framework 4.6 with bundled AutoLISP routines.
