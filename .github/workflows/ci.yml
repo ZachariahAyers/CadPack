@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lisp:
+    name: LISP and ribbon checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node --test 'tools/*.test.mjs'
+      - run: node tools/check-lisp.mjs lisp
+
+  build:
+    name: Build plug-in
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet build src/CadPack/CadPack.csproj --configuration Release
+      - uses: actions/upload-artifact@v7
+        with:
+          name: CadPack.bundle
+          path: src/CadPack/bin/Release/net10.0-windows/CadPack.bundle
