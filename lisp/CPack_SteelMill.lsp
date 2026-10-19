@@ -1,17 +1,15 @@
 
   ;--------------------------INTERNAL ERROR HANDLER---------------------;
+  ; Cancel and exit stay quiet; any other error is printed. Settings and the undo group are always closed.
 (defun
    STL_ERR (MSG)
-  (if (or (/= MSG "Function cancelled")
-  ; If an error (such as ESC) occurs
-          (= MSG "quit / exit abort")
-      ) ;_ end of or
-    (princ)
+  (if (not (member MSG '("Function cancelled" "quit / exit abort")))
     (princ (strcat "\nError: " MSG))
-  ) ; while this command is active...
-  (setvar "OSMODE" OS) ; Restore saved modes
+  )
+  (setvar "OSMODE" OS)
   (setvar "PLINEWID" PLW)
-  (setq *ERROR* OLDERR) ; Restore old *error* handler
+  (command-s "._undo" "_end")
+  (setq *ERROR* OLDERR)
   (princ)
 ) ;end STL_ERR
   ;------------------------------MAIN PROGRAM----------------------------;
@@ -2374,17 +2372,19 @@
   ) ;_ end of setq
   (setq OS (getvar "OSMODE"))
   (setq PLW (getvar "PLINEWID"))
+  (command "._undo" "_begin")
   (setvar "OSMODE" 111)
   (setvar "PLINEWID" 0)
   (STL_DIALOG)
   (DRAW_SHAPE)
   (setvar "PLINEWID" PLW)
   (setvar "OSMODE" OS)
+  (command "._undo" "_end")
   (setq *ERROR* OLDERR) ; Restore old *error* handler
   (princ)
 ) ;end STL
   ;Print message once loaded.
-(princ "\nStak Tools STEEL MILL Loaded. Type STL to use.")
+(princ "\nCadPack Steel Mill loaded. Type CPack_SteelMill to use.")
 (princ)
 
 

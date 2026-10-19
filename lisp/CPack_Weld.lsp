@@ -1,8 +1,12 @@
 ;; ERROR HANDLER
+;; Installed by C:CPack_WELD for its own run only. Cancel and exit stay quiet.
 ;;
-(defun *error* (msg)
+(defun WELD_ERR (msg)
+  (if (not (member msg '("Function cancelled" "quit / exit abort")))
+    (princ (strcat "\nError: " msg)))
   (setvar "CMDECHO" echo)
-  (setvar "BLIPMODE" blip)
+  (setvar "OSMODE" omode)
+  (command-s "._undo" "_end")
   (setq *error* err)
   (princ)
 )
@@ -1677,7 +1681,7 @@
 
 ;; MAIN FUNCTION
 ;;
-(defun C:CPack_WELD (/ blip echo err pt1 pt2 pt3 add_len contour_list done_yet
+(defun C:CPack_WELD (/ echo err pt1 pt2 pt3 add_len contour_list done_yet
                  finish_list offset omode pitch_len ref_pt stop_this temp_pt
                  text_width weld_len weld_list y_near weld_throat_far
                  weld_throat_near 
@@ -1685,12 +1689,12 @@
 
 ;; SET VARIABLES
 ;;
-  (setq err *error*)
-  (setq blip (getvar "BLIPMODE"))
+  (setq err *error*
+        *error* WELD_ERR)
   (setq echo (getvar "CMDECHO"))
   (setq omode (getvar "OSMODE"))
-  (setvar "BLIPMODE" 0)
   (setvar "CMDECHO" 0)
+  (command "._undo" "_begin")
 
 ;; INITIALIZE VARIABLES
 ;;
@@ -1750,12 +1754,12 @@
 
 ;; RESET VARIABLES
 ;;
+  (command "._undo" "_end")
   (setq *error* err)
-  (setvar "BLIPMODE" blip)
   (setvar "CMDECHO" echo)
   (setvar "OSMODE" omode)
 
   (princ)
 )
 
-(princ " WELD loaded.  ")
+(princ "\nCadPack Weld Symbol loaded. Type CPack_Weld to use.")

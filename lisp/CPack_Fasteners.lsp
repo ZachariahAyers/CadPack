@@ -1,13 +1,14 @@
 
 ;--------------------------INTERNAL ERROR HANDLER---------------------;
-(defun FAST_ERR (msg) 
-  (if (or (/= msg "Function cancelled") ; If an error (such as ESC) occurs
-          (= msg "quit / exit abort"))
-  (princ)
-  (princ (strcat "\nError: " msg))) ; while this command is active...
-  (setvar "OSMODE" os)              ; Restore saved modes
+; Cancel and exit stay quiet; any other error is printed. Settings and the undo group are always closed.
+(defun FAST_ERR (msg)
+  (if (not (member msg '("Function cancelled" "quit / exit abort")))
+    (princ (strcat "\nError: " msg)))
+  (setvar "OSMODE" os)
   (setvar "PLINEWID" plw)
-  (setq *error* olderr)            ; Restore old *error* handler
+  (setvar "ISOLINES" iso)
+  (command-s "._undo" "_end")
+  (setq *error* olderr)
   (princ)
 );end FAST_ERR
 ;------------------------------MAIN PROGRAM----------------------------;
@@ -2017,18 +2018,21 @@ shank lg td scale fast_dim_file)
       *error* fast_err)
 (setq os (getvar "OSMODE"))
 (setq plw (getvar "PLINEWID"))
+(setq iso (getvar "ISOLINES"))
+(command "._undo" "_begin")
 (setvar "PLINEWID" 0)
 (setvar "ISOLINES" 24)
 (FAST_DIALOG)
 (DRAW_FAST)
-(setvar "ISOLINES" 0)
+(setvar "ISOLINES" iso)
 (setvar "PLINEWID" plw)
 (setvar "OSMODE" os)
+(command "._undo" "_end")
 (setq *error* olderr); Restore old *error* handler
 (princ)
 );end FAST
 ;Print message once loaded.
-(princ "\nStakTools Fastener Bin Loaded. Type FAST to use.")
+(princ "\nCadPack Fastener Bin loaded. Type CPack_Fasteners to use.")
 (princ)
 
  
