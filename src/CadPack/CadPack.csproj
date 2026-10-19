@@ -13,7 +13,6 @@
     <Company>Ayers Electronics</Company>
     <Copyright>Copyright Ayers Electronics Inc</Copyright>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <BundleDir>$(OutDir)CadPack.bundle/</BundleDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +26,10 @@
 
   <!-- Lays out the autoloader bundle next to the build output: bin/<config>/net10.0-windows/CadPack.bundle -->
   <Target Name="AssembleBundle" AfterTargets="Build">
+    <!-- Set here, not at project level: OutDir is defined by the SDK targets, which load after the project body. -->
+    <PropertyGroup>
+      <BundleDir>$(OutDir)CadPack.bundle/</BundleDir>
+    </PropertyGroup>
     <ItemGroup>
       <BundleLisp Include="$(MSBuildThisFileDirectory)../../lisp/*.lsp" />
       <BundleSupport Include="$(MSBuildThisFileDirectory)../../lisp/support/*" />

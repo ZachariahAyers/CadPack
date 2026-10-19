@@ -33,3 +33,4 @@ jobs:
         with:
           name: CadPack.bundle
           path: src/CadPack/bin/Release/net10.0-windows/CadPack.bundle
+          if-no-files-found: error
