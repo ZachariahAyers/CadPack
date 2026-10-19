@@ -7,4 +7,4 @@ from its ribbon. Their original authors are not named in the files. `support/Stl
 the metric shape tables to BEAM.LSP by Steve Q. Stapleton and Bill Le Couteur.
 
 CadPack renamed their commands, fixed their error handling and wrapped each command in one undo
-group. The repository license covers CadPack's own code; these files keep their authors' terms.
+group. The repository license covers CadPack's own code; these files carry no licence statement, so no terms are granted for them here.
