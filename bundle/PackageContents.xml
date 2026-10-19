@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AppVersion="2.0.0"
+    ProductCode="{ACFC88F9-966B-48E5-A466-2C3019D67C6D}"
+    Name="CadPack"
+    Author="Zachariah Ayers">
+
+  <CompanyDetails Name="Ayers Electronics" Url="https://ayers.repair" />
+
+  <Components>
+    <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R26.0" SupportPath="./Contents/Support" />
+    <ComponentEntry AppName="CadPack" ModuleName="./Contents/Windows/CadPack.dll" AppDescription="Ribbon and commands" />
+    <ComponentEntry AppName="CadPackSteelMill" ModuleName="./Contents/Lisp/CPack_SteelMill.lsp" AppDescription="Steel Mill" />
+    <ComponentEntry AppName="CadPackFasteners" ModuleName="./Contents/Lisp/CPack_Fasteners.lsp" AppDescription="Fastener Bin" />
+    <ComponentEntry AppName="CadPackWeld" ModuleName="./Contents/Lisp/CPack_Weld.lsp" AppDescription="Weld Symbol" />
+  </Components>
+
+</ApplicationPackage>

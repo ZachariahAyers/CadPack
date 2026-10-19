@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>CadPack</RootNamespace>
+    <Version>2.0.0</Version>
+    <Product>CadPack</Product>
+    <Authors>Zachariah Ayers</Authors>
+    <Company>Ayers Electronics</Company>
+    <Copyright>Copyright Ayers Electronics Inc</Copyright>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <BundleDir>$(OutDir)CadPack.bundle/</BundleDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- AutoCAD 2027 API. AutoCAD supplies these assemblies at run time, so none are copied. -->
+    <PackageReference Include="AutoCAD.NET" Version="26.0.0" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Icons/*.png" LogicalName="%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Lays out the autoloader bundle next to the build output: bin/<config>/net10.0-windows/CadPack.bundle -->
+  <Target Name="AssembleBundle" AfterTargets="Build">
+    <ItemGroup>
+      <BundleLisp Include="$(MSBuildThisFileDirectory)../../lisp/*.lsp" />
+      <BundleSupport Include="$(MSBuildThisFileDirectory)../../lisp/support/*" />
+    </ItemGroup>
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)../../bundle/PackageContents.xml" DestinationFolder="$(BundleDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BundleDir)Contents/Windows" />
+    <Copy SourceFiles="@(BundleLisp)" DestinationFolder="$(BundleDir)Contents/Lisp" />
+    <Copy SourceFiles="@(BundleSupport)" DestinationFolder="$(BundleDir)Contents/Support" />
+  </Target>
+
+</Project>
