@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/ZachariahAyers/CadPack/actions/workflows/ci.yml/badge.svg)](https://github.com/ZachariahAyers/CadPack/actions/workflows/ci.yml)
 
+> CadPack's tools now live in [RabCab](https://getrabcab.com/), coming free to the Autodesk App Store. This repository stays for reference and takes no new features.
+
 An AutoCAD 2027 plug-in that puts a 3D detailer's everyday tools on one ribbon tab.
 
 ## Features
